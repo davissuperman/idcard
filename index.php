@@ -57,6 +57,27 @@ include "Order.php";
                     </div>
                 </div>
             </div>
+            <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+          <h4 class="panel-title">   产品2 </h4>
+        </a>
+      </h4>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse">
+      <div cl="panel-body">
+          <div class="row">
+                    <div class="col-md-4">订单日期</div>
+                    <div class="col-md-8">$orderDate</div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4">旺旺昵称</div>
+                    <div class="col-md-8">$wangwangName</div>
+                  </div>
+         </div>
+    </div>
+  </div>
         </div>
 HTML;
     ?>
