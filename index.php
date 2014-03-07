@@ -199,7 +199,7 @@ HTML;
        <div id="feedback"></div>    <!-- 响应返回数据容器 -->
        <div class="form-group">
            <div class="col-sm-offset-6 col-sm-10">
-               <button type="submit"  class="btn btn-primary btn-lg">保存</button>
+<!--               <button type="submit"  class="btn btn-primary btn-lg">保存</button>-->
            </div>
        </div>
 
