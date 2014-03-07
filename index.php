@@ -10,6 +10,7 @@ include "Order.php";
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
 	    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -69,6 +70,9 @@ HTML;
                     <i class="glyphicon glyphicon-plus"></i>
                     <span>上传...</span>
            </span>
+           <p class="upload_tips">
+               大小: 不超过2M,&nbsp;&nbsp;&nbsp;&nbsp;格式: bmp, png, jpeg, jpg, gif
+           </p>
            <input type="file" name="image" style="opacity:0;filter:alpha(opacity=0);" id="inputfile"/>
        </div>
        <div id="feedback"></div>    <!-- 响应返回数据容器 -->
