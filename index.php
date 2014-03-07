@@ -26,6 +26,7 @@ include "Order.php";
 
 <div class="container">
 	 <h2 class="form-signin-heading">请提交身份证信息</h2>
+    <p class="text-danger"><strong>上传的照片只用于海关个人包裹报关</strong>详情请点击 <a href="#" target="_blank">天猫海关需知</a></p>
 	<h3>用户详情</h3>
        用户名：
 	<h3>订单详情</h3>
@@ -40,7 +41,7 @@ include "Order.php";
                 <div class="panel-heading">
                     <h4 class="panel-title">
                         <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                         <h4 class="panel-title">  产品1</h4>
+                         <h4 class="panel-title">  订单1 </h4>
                         </a>
                     </h4>
                 </div>
@@ -61,7 +62,7 @@ include "Order.php";
     <div class="panel-heading">
       <h4 class="panel-title">
         <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-          <h4 class="panel-title">   产品2 </h4>
+          <h4 class="panel-title">   订单2 </h4>
         </a>
       </h4>
     </div>
