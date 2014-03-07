@@ -204,10 +204,7 @@ HTML;
        </div>
 
    </form>
-    <button data-url="" class="btn btn-danger delete" id="deletebutton" style="display: none">
-        <i class="glyphicon "></i>
-        <span>删除</span>
-    </button>
+
 </div> <!-- /container -->
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -225,6 +222,7 @@ HTML;
             $.each($('#inputfile')[0].files, function(i, file) {
                 data.append('upload_file', file);
             });
+            data.append('orderid', "123456");
             $.ajax({
                 url:'submit_form_process.php',
                 type:'POST',
@@ -234,17 +232,18 @@ HTML;
                 processData: false,    //不可缺
                 success:function(data){
                     data = $(data).html();
-                    if($("#feedback").children('img').length == 0) $("#feedback").append(data.replace(/&lt;/g,'<').replace(/&gt;/g,'>'));
-                    else $("#feedback").children('img').eq(0).before(data.replace(/&lt;/g,'<').replace(/&gt;/g,'>'));
-                    $("#deletebutton").show();
+                    var innerhtml ="<div style='padding-bottom:10px;'>" + data.replace(/&lt;/g,'<').replace(/&gt;/g,'>') + "</div>";
+                    if($("#feedback").children('img').length == 0) $("#feedback").append(innerhtml);
+                    else $("#feedback").children('img').eq(0).before(innerhtml);
+                  //  $("#deletebutton").show();
                 }
             });
         });
 
-        $("#deletebutton").click(function(){
-            $("#feedback").html('');
-            $("#deletebutton").hide();
-        });
+//        $("#deletebutton").click(function(){
+//            $("#feedback").html('');
+//            $("#deletebutton").hide();
+//        });
     });
 </script>
 </body>
