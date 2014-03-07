@@ -197,6 +197,9 @@ HTML;
            <input type="file" name="image" style="opacity:0;filter:alpha(opacity=0);" id="inputfile"/>
        </div>
        <div id="feedback"></div>    <!-- 响应返回数据容器 -->
+       <div id="myShow" style="display:none;">
+           <img alt="loading" src="images/ajaxloader.gif" />
+       </div>
        <div class="form-group">
            <div class="col-sm-offset-6 col-sm-10">
 <!--               <button type="submit"  class="btn btn-primary btn-lg">保存</button>-->
@@ -230,11 +233,15 @@ HTML;
                 cache: false,
                 contentType: false,    //不可缺
                 processData: false,    //不可缺
+                beforeSend:function(XMLHttpRequest){
+                    $("#myShow").css({display:"",top:"50%",left:"50%",position:"absolute"});
+                },
                 success:function(data){
                     data = $(data).html();
                     var innerhtml ="<div style='padding-bottom:10px;'>" + data.replace(/&lt;/g,'<').replace(/&gt;/g,'>') + "</div>";
                     if($("#feedback").children('img').length == 0) $("#feedback").append(innerhtml);
                     else $("#feedback").children('img').eq(0).before(innerhtml);
+                    $("#myShow").hide();
                   //  $("#deletebutton").show();
                 }
             });
