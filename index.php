@@ -9,7 +9,7 @@ include "Order.php";
 	<meta charset="UTF-8">
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
 	    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -86,7 +86,7 @@ HTML;
 <!--<script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>-->
 <script src="js/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
         $("#inputfile").change(function(){
