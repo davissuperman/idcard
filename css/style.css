@@ -57,7 +57,6 @@ table {
     text-align: center;
 }
 .order-item{
-    border: 1px solid #DDDDDD;
 }
 .order-item .sku {
     color: #808080;
@@ -109,4 +108,12 @@ table {
     line-height: 18px;
     margin-left: 55px;
     text-align: left;
+}
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+.bd{
+    font: 12px/1.5 Tahoma,Helvetica,Arial,'宋体',sans-serif;
 }

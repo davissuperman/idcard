@@ -1,7 +1,7 @@
 <?php
 class Order{
     static function getOrderInfo(){
-        $url = "http://10.0.0.24:10009/Order.ashx?OrderNumber=6611006";
+        $url = "http://10.0.0.24:10009/Order.ashx?OrderID=308443206005356";
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL,$url);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0); // 对认证证书来源的检查，0表示阻止对证书的合法性的检查。
