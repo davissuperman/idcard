@@ -32,7 +32,6 @@ include "Order.php";
 		$wangwangName = $orderInfo['Name'];
         $address = $orderInfo['Country'] ." ". $orderInfo['City']." ". $orderInfo['Address'];
         $email = $orderInfo['Email'];
-        $phone = $orderInfo['Phone'];
         $product = $orderInfo['Product'];
         $orderDate =  $orderInfo['OrderDate'];
 
@@ -95,19 +94,26 @@ HTML;
                          </colgroup>
                          <tbody class="contact-info">
                          <tr>
-                             <th colspan="7"> 用户详情 </th>
+                             <th colspan="7"><h4>用户详情</h4></th>
                          </tr>
                          <tr>
                              <td colspan="2">
                                  昵称：
                                  <span class="nickname"><?php echo $wangwangName;?></span>
                              </td>
-                             <td valign="top"  >邮件：<span><?php echo $email?></span>
+                             <td colspan="6">
+                                 真实姓名：
+                                 <span class="name"></span>
+
                              </td>
                          </tr>
                          <tr>
                              <td colspan="2">所在地区：<span class="city"><?php echo $address?> </span></td>
-                             <td class="contact" colspan="6">联系电话：<span class="tel"><?php echo $phone?></span></td>
+                             <td class="contact" colspan="6">联系电话：<span class="tel"></span></td>
+                         </tr>
+                         <tr>
+                             <td valign="top" colspan="2">邮件：<span><?php echo $email?></span>
+                             </td>
                          </tr>
                          </tbody>
                          <tbody class="misc-info">
@@ -193,7 +199,6 @@ HTML;
            <p class="upload_tips">
                大小: 不超过2M,&nbsp;&nbsp;&nbsp;&nbsp;格式: bmp, png, jpeg, jpg, gif
            </p>
-
            <input type="file" name="image" style="opacity:0;filter:alpha(opacity=0);" id="inputfile"/>
        </div>
        <div id="feedback"></div>    <!-- 响应返回数据容器 -->
@@ -204,10 +209,7 @@ HTML;
        </div>
 
    </form>
-    <button data-url="" class="btn btn-danger delete" id="deletebutton" style="display: none">
-        <i class="glyphicon "></i>
-        <span>删除</span>
-    </button>
+
 </div> <!-- /container -->
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -236,14 +238,8 @@ HTML;
                     data = $(data).html();
                     if($("#feedback").children('img').length == 0) $("#feedback").append(data.replace(/&lt;/g,'<').replace(/&gt;/g,'>'));
                     else $("#feedback").children('img').eq(0).before(data.replace(/&lt;/g,'<').replace(/&gt;/g,'>'));
-                    $("#deletebutton").show();
                 }
             });
-        });
-
-        $("#deletebutton").click(function(){
-            $("#feedback").html('');
-            $("#deletebutton").hide();
         });
     });
 </script>
