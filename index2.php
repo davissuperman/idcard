@@ -23,9 +23,9 @@ include "Order.php";
    <form  role="form" method="post" action="save.php" >
 	 <h2 class="form-signin-heading">请提交身份证信息</h2>
        <p class="text-danger"><strong>上传的照片只用于海关个人包裹报关</strong>详情请点击 <a href="#" target="_blank">天猫海关需知</a></p>
-	<h3>用户详情</h3>
+	<h4>用户详情</h4>
        用户名：
-	<h3>订单详情</h3>
+	<h4>订单详情</h4>
     <?php
         $orderInfo = Order ::getOrderInfo();
 		$orderInfo = $orderInfo[0];
@@ -59,7 +59,10 @@ HTML;
     ?>
        <div>
            <!-- 点击图片添加文件方式 -->
-           <img src="http://f7-preview.awardspace.com/zjmainstay.co.cc/jQueryExample/jquery_upload_image/files/addfile.jpg" onclick="getElementById('inputfile').click()" title="点击添加图片" alt="点击添加图片">
+           <span class="btn btn-success fileinput-button" onclick="getElementById('inputfile').click()" >
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span>上传...</span>
+           </span>
            <input type="file" name="image" style="opacity:0;filter:alpha(opacity=0);" id="inputfile"/>
        </div>
        <div id="feedback"></div>    <!-- 响应返回数据容器 -->
