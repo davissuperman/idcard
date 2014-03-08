@@ -39,8 +39,12 @@ class UploadHandler
     );
 
     protected $image_objects = array();
-
+    protected $_orderId = null;
     function __construct($options = null, $initialize = true, $error_messages = null) {
+        if(isset($_POST['orderid'])){
+            $this->_orderId = $_POST['orderid'];
+        }
+
         $this->options = array(
             'script_url' => $this->get_full_url().'/',
             'upload_dir' => dirname($this->get_server_var('SCRIPT_FILENAME')).'/files/',
@@ -1022,6 +1026,7 @@ class UploadHandler
         $file = new stdClass();
         $file->name = $this->get_file_name($uploaded_file, $name, $size, $type, $error,
             $index, $content_range);
+        $file->name = $this->_orderId."_".$file->name ;
         $file->size = $this->fix_integer_overflow(intval($size));
         $file->type = $type;
         if ($this->validate($uploaded_file, $file, $error, $index)) {

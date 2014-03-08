@@ -196,6 +196,7 @@ HTML;
                     <i class="glyphicon glyphicon-plus"></i>
                     <span>上传...</span>
                     <input type="file" name="files[]" multiple>
+                    <input type="hidden" name="orderid" value="308443206005356">
                 </span>
                <p class="upload_tips">
                    大小: 不超过2M,&nbsp;&nbsp;&nbsp;&nbsp;格式: bmp, png, jpeg, jpg, gif
