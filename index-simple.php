@@ -9,13 +9,8 @@ include "Order.php";
 	<meta charset="UTF-8">
 
     <!-- Bootstrap -->
-<!--    <link rel="stylesheet" href="css/bootstrap.min.css">-->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
-
-    <!--    <link rel="stylesheet" href="css/bootstrap.min.css">-->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/jquery.fileupload.css">
-    <link rel="stylesheet" href="css/jquery.fileupload-ui.css">
 	    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -27,7 +22,7 @@ include "Order.php";
 
 <div class="container">
     <!-- Tab panes -->
-    <form id="fileupload" action="" method="POST" enctype="multipart/form-data">
+   <form  role="form" method="post" action="save.php" >
 	 <h2 class="form-signin-heading">请提交身份证信息</h2>
        <p class="text-danger"><strong>上传的照片只用于海关个人包裹报关</strong>详情请点击 <a href="#" target="_blank">天猫海关需知</a></p>
     <?php
@@ -189,131 +184,74 @@ HTML;
              </table>
          </div>
      </div>
-       <div class="row fileupload-buttonbar">
-           <div class="col-lg-7">
-               <!-- The fileinput-button span is used to style the file input field as button -->
-                <span class="btn btn-success fileinput-button">
+       <div>
+           <!-- 点击图片添加文件方式 -->
+           <span class="btn btn-success fileinput-button" onclick="getElementById('inputfile').click()" >
                     <i class="glyphicon glyphicon-plus"></i>
                     <span>上传...</span>
-                    <input type="file" name="files[]" multiple>
-                </span>
-               <p class="upload_tips">
-                   大小: 不超过2M,&nbsp;&nbsp;&nbsp;&nbsp;格式: bmp, png, jpeg, jpg, gif
-               </p>
-               <!-- The global file processing state -->
-               <span class="fileupload-process"></span>
-           </div>
-           <!-- The global progress state -->
-           <div class="col-lg-5 fileupload-progress fade">
-               <!-- The global progress bar -->
-               <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-                   <div class="progress-bar progress-bar-success" style="width:0%;"></div>
-               </div>
-               <!-- The extended global progress state -->
-               <div class="progress-extended">&nbsp;</div>
+           </span>
+           <p class="upload_tips">
+               大小: 不超过2M,&nbsp;&nbsp;&nbsp;&nbsp;格式: bmp, png, jpeg, jpg, gif
+           </p>
+
+           <input type="file" name="image" style="opacity:0;filter:alpha(opacity=0);" id="inputfile"/>
+       </div>
+       <div id="feedback"></div>    <!-- 响应返回数据容器 -->
+       <div id="myShow" style="display:none;">
+           <img alt="loading" src="images/ajaxloader.gif" />
+       </div>
+       <div class="form-group">
+           <div class="col-sm-offset-6 col-sm-10">
+<!--               <button type="submit"  class="btn btn-primary btn-lg">保存</button>-->
            </div>
        </div>
-       <!-- The table listing the files available for upload/download -->
-       <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
 
    </form>
 
 </div> <!-- /container -->
 
-
-<!-- The template to display files available for upload -->
-<script id="template-upload" type="text/x-tmpl">
-{% for (var i=0, file; file=o.files[i]; i++) { %}
-    <tr class="template-upload fade">
-        <td>
-            <span class="preview"></span>
-        </td>
-        <td>
-            <p class="name">{%=file.name%}</p>
-            <strong class="error text-danger"></strong>
-        </td>
-        <td>
-            <p class="size">Processing...</p>
-            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-            <div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
-        </td>
-        <td>
-            {% if (!i && !o.options.autoUpload) { %}
-                <button class="btn btn-primary start" >
-                    <i class="glyphicon glyphicon-upload"></i>
-                    <span>保存</span>
-                </button>
-            {% } %}
-            {% if (!i) { %}
-                <button class="btn btn-warning cancel">
-                    <i class="glyphicon glyphicon-ban-circle"></i>
-                    <span>取消</span>
-                </button>
-            {% } %}
-        </td>
-    </tr>
-{% } %}
-</script>
-<!-- The template to display files available for download -->
-<script id="template-download" type="text/x-tmpl">
-{% for (var i=0, file; file=o.files[i]; i++) { %}
-    <tr class="template-download fade">
-        <td>
-            <span class="preview">
-                {% if (file.thumbnailUrl) { %}
-                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
-                {% } %}
-            </span>
-        </td>
-        <td>
-            {% if (file.deleteUrl) { %}
-                <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
-                    <i class="glyphicon glyphicon-trash"></i>
-                    <span>删除</span>
-                </button>
-            {% } else { %}
-                <button class="btn btn-warning cancel">
-                    <i class="glyphicon glyphicon-ban-circle"></i>
-                    <span>Cancel</span>
-                </button>
-            {% } %}
-        </td>
-    </tr>
-{% } %}
-</script>
-
-
-</div> <!-- /container -->
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<!--<script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>-->
 <script src="js/jquery.min.js"></script>
-<!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
-<script src="js/vendor/jquery.ui.widget.js"></script>
-<!-- The Templates plugin is included to render the upload/download listings -->
-<script src="js/tmpl.min.js"></script>
-<!-- The Load Image plugin is included for the preview images and image resizing functionality -->
-<script src="js/load-image.min.js"></script>
-<!-- The Canvas to Blob plugin is included for image resizing functionality -->
-<script src="js/canvas-to-blob.min.js"></script>
-<!-- Bootstrap JS is not required, but included for the responsive demo navigation -->
+<!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="js/bootstrap.min.js"></script>
-<!-- blueimp Gallery script -->
-<!--<script src="http://blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>-->
-<!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
-<script src="js/jquery.iframe-transport.js"></script>
-<!-- The basic File Upload plugin -->
-<script src="js/jquery.fileupload.js"></script>
-<!-- The File Upload processing plugin -->
-<script src="js/jquery.fileupload-process.js"></script>
-<!-- The File Upload image preview & resize plugin -->
-<script src="js/jquery.fileupload-image.js"></script>
-<!-- The File Upload audio preview plugin -->
-<!--<script src="js/jquery.fileupload-audio.js"></script>-->
-<!-- The File Upload video preview plugin -->
-<!--<script src="js/jquery.fileupload-video.js"></script>-->
-<!-- The File Upload validation plugin -->
-<script src="js/jquery.fileupload-validate.js"></script>
-<!-- The File Upload user interface plugin -->
-<script src="js/jquery.fileupload-ui.js"></script>
-<!-- The main application script -->
-<script src="js/main.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#inputfile").change(function(){
+            //创建FormData对象
+            var data = new FormData();
+            //为FormData对象添加数据
+            //
+            $.each($('#inputfile')[0].files, function(i, file) {
+                data.append('upload_file', file);
+            });
+            data.append('orderid', "123456");
+            $.ajax({
+                url:'submit_form_process.php',
+                type:'POST',
+                data:data,
+                cache: false,
+                contentType: false,    //不可缺
+                processData: false,    //不可缺
+                beforeSend:function(XMLHttpRequest){
+                    $("#myShow").css({display:"",top:"50%",left:"50%",position:"absolute"});
+                },
+                success:function(data){
+                    data = $(data).html();
+                    var innerhtml ="<div style='padding-bottom:10px;'>" + data.replace(/&lt;/g,'<').replace(/&gt;/g,'>') + "</div>";
+                    if($("#feedback").children('img').length == 0) $("#feedback").append(innerhtml);
+                    else $("#feedback").children('img').eq(0).before(innerhtml);
+                    $("#myShow").hide();
+                  //  $("#deletebutton").show();
+                }
+            });
+        });
+
+//        $("#deletebutton").click(function(){
+//            $("#feedback").html('');
+//            $("#deletebutton").hide();
+//        });
+    });
+</script>
 </body>
 </html>
