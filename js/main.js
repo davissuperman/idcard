@@ -18,6 +18,12 @@ $(function () {
     $('#fileupload').fileupload({
         // Uncomment the following to send cross-domain cookies:
         //xhrFields: {withCredentials: true},
+        acceptFileTypes: /(\.|\/)(gif|jpe?g|png|bmp)$/i,
+        maxFileSize: 2000000, // 2MB
+        previewMaxWidth: 100,
+        previewMaxHeight: 100,
+        dataType: 'json',
+        autoUpload: true,
         url: 'server/php/'
     });
 
