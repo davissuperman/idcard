@@ -23,7 +23,7 @@ $(function () {
         previewMaxWidth: 100,
         previewMaxHeight: 100,
         dataType: 'json',
-        autoUpload: true,
+        autoUpload: false,
         url: 'server/php/'
     });
 
