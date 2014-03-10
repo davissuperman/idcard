@@ -1,7 +1,13 @@
 <?php
 class Order{
     static function getOrderInfo(){
-        $orderId = trim($_GET['orderid']);
+
+        $uri = $_SERVER['REQUEST_URI'];
+        $tmpArr = explode('/',$uri);
+        $orderId = base64_decode($tmpArr[3]);
+        if(!$orderId){
+            $orderId = $_GET['orderid'];
+        }
         if(!$orderId){
             echo"订单号错误，不能为空";die;
         }
