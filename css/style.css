@@ -42,11 +42,6 @@ table {
     background: none repeat scroll 0 0 #E8F2FF;
     color: #404040;
 }
-table {
-    border-collapse: collapse;
-    border-spacing: 0;
-}
-
 .order-hd .item {
     border-left: 1px solid #DDDDDD;
 }
@@ -62,15 +57,7 @@ table {
     color: #808080;
 }
 .order-item td {
-    -moz-border-bottom-colors: none;
-    -moz-border-left-colors: none;
-    -moz-border-right-colors: none;
-    -moz-border-top-colors: none;
-    border-color: -moz-use-text-color #DDDDDD #DDDDDD;
-    border-image: none;
-    border-right: 1px solid #DDDDDD;
-    border-style: none solid solid;
-    border-width: 0 1px 1px;
+    border: 1px solid #DDDDDD;
     line-height: 130%;
     padding: 8px 5px;
     text-align: center;
@@ -79,6 +66,9 @@ table {
 .sep-row td {
     border-bottom: 1px solid #DDDDDD;
     padding: 5px 0;
+}
+.last{
+    border-right: 1px solid #DDDDDD;
 }
 .info-box td, .info-box th {
     line-height: 1.5;

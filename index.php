@@ -103,7 +103,7 @@ HTML;
                          </colgroup>
                          <tbody class="contact-info">
                          <tr>
-                             <th colspan="7"> 用户详情 </th>
+                             <th colspan="2"> 用户详情 </th>
                          </tr>
                          <tr>
                              <td colspan="2">
@@ -120,7 +120,7 @@ HTML;
                          </tbody>
                          <tbody class="misc-info">
                          <tr class="sep-row">
-                             <td colspan="8"></td>
+                             <td colspan="2"></td>
                          </tr>
 <!--                         <tr>-->
 <!--                             <td colspan="8">-->
@@ -129,7 +129,7 @@ HTML;
 <!--                             </td>-->
 <!--                         </tr>-->
                          <tr>
-                             <td colspan="8">
+                             <td colspan="2">
                                  <span class="">订单成交时间：</span>
                                  <span class="trade-time"><?php echo $orderDate;?></span>
                              </td>
@@ -138,7 +138,7 @@ HTML;
                          <!-- 订单信息 -->
                          <tbody class="order">
                          <tr class="sep-row">
-                             <td colspan="8"></td>
+                             <td colspan="2"></td>
                          </tr>
                          <tr class="order-hd">
                              <th class="item">宝贝</th>
@@ -148,7 +148,7 @@ HTML;
                                     $pName = $each['ProductName'];
                                     $price = $each['PricePerUnit'];
                                     echo <<<HTML
- <tr class="">
+ <tr class="order-item">
                              <td class="item">
                                  <div class="pic-info">
                                  </div>
