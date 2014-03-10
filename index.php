@@ -44,6 +44,8 @@ include "Order.php";
 
         //收货人相关信息
         $shipName = $orderInfo['ShipName'];
+        $shipPhone = $orderInfo['ShipPhone'];
+        $shipZip = $orderInfo['ShipZip'];
         $shipAddress =  $orderInfo['ShipCountry'] .$orderInfo['ShipCity'].$orderInfo['ShipAddress'].$orderInfo['ShipAddress2'] ;
 //    var_dump($orderInfo);
     /*
@@ -185,7 +187,7 @@ HTML;
                  <tbody>
                  <tr>
                      <th>收货地址：</th>
-                     <td><?php echo $shipName?> ，15075556657 <?php echo $shipAddress?>，063611</td>
+                     <td><?php echo $shipName?> ，<?php echo $shipPhone;?> <?php echo $shipAddress?>，<?php echo $shipZip; ?></td>
                  </tr>
              </table>
          </div>
