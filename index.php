@@ -25,7 +25,7 @@ include "Order.php";
 </head>
 <body>
 
-<div class="container">
+<div class="container"  id="main">
     <!-- Tab panes -->
     <form id="fileupload" action="" method="POST" enctype="multipart/form-data">
 	 <h2 class="form-signin-heading">请提交身份证信息</h2>
@@ -286,6 +286,34 @@ HTML;
 
 
 </div> <!-- /container -->
+<script type="text/javascript">
+    var loading_dom = document.createElement("div");
+    with(loading_dom){
+        style.width='100%';
+        style.height = window.innerHeight+'px';
+        loading_dom.style.position ='absolute';
+        style.top ='0';
+        style.zIndex ='999999';
+        style.background ='#ffffff';
+        addEventListener('touchstart',function(e){
+            e.preventDefault();
+        });
+        addEventListener('touchmove',function(e){
+            e.preventDefault();
+        });
+        addEventListener('touchend',function(e){
+            e.preventDefault();
+        });
+        innerHTML = "<p style='text-align:center;margin-top:"+(window.innerHeight/2-50)+"px'><span class='icon icon-spinner5' style='font-size:24px;color:#444'></span><br />载入中..</p>";
+    }
+    document.body.appendChild(loading_dom);
+    var loadedpage = function(){
+        document.getElementById('main').style.visibility='visible';
+        loading_dom.style.display = 'none';
+        document.body.removeChild(loading_dom);
+    };
+    window.onload = loadedpage;
+</script>
 <script src="js/jquery.min.js"></script>
 <!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
 <script src="js/vendor/jquery.ui.widget.js"></script>
