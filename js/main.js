@@ -24,7 +24,8 @@ $(function () {
         previewMaxHeight: 100,
         dataType: 'json',
         autoUpload: false,
-        url: 'server/php/'
+        user_dirs:true,
+        url: 'server/php/index.php?orderid='+$("#orderid").val()
     });
 
     // Enable iframe cross-domain access via redirect option:

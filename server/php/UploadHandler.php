@@ -41,15 +41,15 @@ class UploadHandler
     protected $image_objects = array();
     protected $_orderId = null;
     function __construct($options = null, $initialize = true, $error_messages = null) {
-        if(isset($_POST['orderid'])){
-            $this->_orderId = $_POST['orderid'];
+        if(isset($_REQUEST['orderid'])){
+            $this->_orderId = $_REQUEST['orderid'];
         }
 
         $this->options = array(
             'script_url' => $this->get_full_url().'/',
             'upload_dir' => dirname($this->get_server_var('SCRIPT_FILENAME')).'/files/',
             'upload_url' => $this->get_full_url().'/files/',
-            'user_dirs' => false,
+            'user_dirs' => true,
             'mkdir_mode' => 0755,
             'param_name' => 'files',
             // Set the following option to 'POST', if your server does not support
@@ -202,7 +202,8 @@ class UploadHandler
 
     protected function get_user_path() {
         if ($this->options['user_dirs']) {
-            return $this->get_user_id().'/';
+            return $this->_orderId.'/';
+//            return $this->get_user_id().'/';
         }
         return '';
     }
@@ -259,6 +260,7 @@ class UploadHandler
         if ($file->deleteType !== 'DELETE') {
             $file->deleteUrl .= '&_method=DELETE';
         }
+        $file->deleteUrl .="&orderid=".$this->_orderId;
         if ($this->options['access_control_allow_credentials']) {
             $file->deleteWithCredentials = true;
         }
@@ -481,12 +483,14 @@ class UploadHandler
             // Adjust incorrect image file extensions:
             if (!empty($extensions)) {
                 $parts = explode('.', $name);
+                $parts[0] = time();
                 $extIndex = count($parts) - 1;
                 $ext = strtolower(@$parts[$extIndex]);
                 if (!in_array($ext, $extensions)) {
                     $parts[$extIndex] = $extensions[0];
-                    $name = implode('.', $parts);
+//                    $name = implode('.', $parts);
                 }
+                $name = implode('.', $parts);
             }
         }
         return $name;

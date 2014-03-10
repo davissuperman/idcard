@@ -32,6 +32,7 @@ include "Order.php";
        <p class="text-danger"><strong>上传的照片只用于海关个人包裹报关</strong>详情请点击 <a href="#" target="_blank">天猫海关需知</a></p>
     <?php
         $orderInfo = Order ::getOrderInfo();
+		$orderId = $orderInfo['orderid'];
 		$orderInfo = $orderInfo['Order'];
 		$orderDate = $orderInfo['OrderDate'];
 		$wangwangName = $orderInfo['Name'];
@@ -196,7 +197,7 @@ HTML;
                     <i class="glyphicon glyphicon-plus"></i>
                     <span>上传...</span>
                     <input type="file" name="files[]" multiple>
-                    <input type="hidden" name="orderid" value="308443206005356">
+                    <input type="hidden" name="orderid" value="<?php echo $orderId; ?>" id="orderid">
                 </span>
                <p class="upload_tips">
                    大小: 不超过2M,&nbsp;&nbsp;&nbsp;&nbsp;格式: bmp, png, jpeg, jpg, gif
