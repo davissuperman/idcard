@@ -107,7 +107,7 @@ HTML;
                          </tr>
                          <tr>
                              <td colspan="2">
-                                 昵称：
+                                 旺旺昵称：
                                  <span class="nickname"><?php echo $wangwangName;?></span>
                              </td>
                              <td valign="top"  >邮件：<span><?php echo $email?></span>
@@ -141,8 +141,8 @@ HTML;
                              <td colspan="2"></td>
                          </tr>
                          <tr class="order-hd">
-                             <th class="item">宝贝</th>
-                             <th class="order-price last">商品总价(元)</th>
+                             <th class="item last">宝贝</th>
+<!--                             <th class="order-price last">商品总价(元)</th>-->
                          </tr>
                          <?php foreach($product as $each){
                                     $pName = $each['ProductName'];
@@ -160,9 +160,9 @@ HTML;
                                      </div>
                                  </div>
                              </td>
-                             <td rowspan="1" class="order-price">
-                                 $price
-                             </td>
+                             <!--<td rowspan="1" class="order-price">-->
+                                 <!--$price-->
+                             <!--</td>-->
                          </tr>
 HTML;
 
