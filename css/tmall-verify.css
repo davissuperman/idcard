@@ -102,11 +102,11 @@ body{
 }
 #wrapper #upload{
 	text-align:center;
-	padding:40px 0 80px 0;
+	padding:10px 0 10px 0;
 }
 #wrapper #feedback{
-    text-align:center;
-    padding:40px 0 80px 0;
+    text-align:left;
+    padding:10px 0 10px 0;
 }
 #wrapper button{
 	font-family:tahoma,arial,\5FAE\8F6F\96C5\9ED1,sans-serif;

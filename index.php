@@ -18,7 +18,7 @@ include "Order.php";
 		$orderInfo = $orderInfo['Order'];
 		$orderDate = $orderInfo['OrderDate'];
 		$wangwangName = $orderInfo['Name'];
-        $address = $orderInfo['Country'] ." ". $orderInfo['City']." ". $orderInfo['Address'];
+       // $address = $orderInfo['Country'] ." ". $orderInfo['City']." ". $orderInfo['Address'];
         $email = $orderInfo['Email'];
         $phone = $orderInfo['Phone'];
         $product = $orderInfo['Product'];
@@ -70,9 +70,11 @@ include "Order.php";
                 大小: 不超过2M,&nbsp;&nbsp;&nbsp;&nbsp;格式: bmp, png, jpeg, jpg, gif
             </p>
             <input type="file" name="image" style="opacity:0;filter:alpha(opacity=0);" id="inputfile"/>
+            <input type="hidden" name="orderid"  id="orderid"  value="<?php echo $orderId; ?>">
 <!--        </form>-->
+            <div id="feedback"></div>    <!-- 响应返回数据容器 -->
     </div>
-    <div id="feedback"></div>    <!-- 响应返回数据容器 -->
+
 
 
     <h2>物流讯息</h2>
@@ -105,16 +107,26 @@ include "Order.php";
     <table>
         <tbody>
         <?php
+        if(isset($product['ProductName'])){
+            $product = array($product);
+        }
         foreach($product as $each){
             $pName = $each['ProductName'];
+            $pSrc =  $each['ImageUrl'];
+            $eursize = $each['Eursize'];
+            if(strtolower($each['Gender']) == "men"){
+                $sex = "男子";
+            }else if(strtolower($each['Gender']) == "woman"){
+                $sex = "女子";
+            }
         ?>
         <tr>
             <td class="order-img">
-                <a href="#"><img src="http://image.sneakerhead.com/is/image/sneakerhead/cat-single?$185m$&$img=sneakerhead/nike-air-foamposite-pro-prm-616750600-1"></a>
+                <a href="#"><img src="<?php echo $pSrc?>"></a>
             </td>
             <td>
                 <p class="order-info"><?php echo $pName;?></p>
-                <p class="order-info">鞋码: 男子43码</p>
+                <p class="order-info">鞋码: 男子<?php echo $eursize;?>码</p>
             </td>
         </tr>
         <?php } ?>
@@ -133,6 +145,7 @@ include "Order.php";
 <script src="js/jquery.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
+        var orderid = $("#orderid").val();
         $("#inputfile").change(function(){
             //创建FormData对象
             var data = new FormData();
@@ -141,7 +154,7 @@ include "Order.php";
             $.each($('#inputfile')[0].files, function(i, file) {
                 data.append('upload_file', file);
             });
-            data.append('orderid', "123456");
+            data.append('orderid',orderid);
             $.ajax({
                 url:'server/index.php',
                 type:'POST',
@@ -163,10 +176,21 @@ include "Order.php";
             });
         });
 
-//        $("#deletebutton").click(function(){
-//            $("#feedback").html('');
-//            $("#deletebutton").hide();
-//        });
+        // Load existing files:
+        $.ajax({
+            url:'server/index.php',
+            type:'POST',
+            data:  {orderid:orderid,getexist:true},
+            success:function(data){
+                data = $(data).html();
+                var innerhtml ="<div style='padding-bottom:10px;'>" + data.replace(/&lt;/g,'<').replace(/&gt;/g,'>') + "</div>";
+                if($("#feedback").children('img').length == 0) $("#feedback").append(innerhtml);
+                else $("#feedback").children('img').eq(0).before(innerhtml);
+                $("#myShow").hide();
+            }
+        });
+
+
     });
 </script>
 </body>

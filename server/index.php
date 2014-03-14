@@ -1,30 +1,87 @@
 <?php
-header("Content-type: text/html; charset=utf-8");
-//不存在当前上传文件则上传
-$orderid = $_POST['orderid'];
-$file = $orderid. $_FILES['upload_file']['name'];
-$upload_dir = get_upload_path(null,$orderid);
-$upload_file = $upload_dir.$file;
-if (!is_dir($upload_dir)) {
-    mkdir($upload_dir,0755, true);
+if(isset($_POST['getexist']) && $_POST['getexist']){
+    //Load exists image
+    $orderid = $_POST['orderid'];
+    $dir =   dirname(get_server_var('SCRIPT_FILENAME')).'/tmp/'.$orderid;
+    $fileArr = readFileArr($dir);
+ //   print_r($fileArr);
+    $return = "<textarea>";
+    foreach($fileArr as $eachFile){
+        $parts = explode('.', $eachFile);
+        $timeStamp = $parts[0];
+        $imgsrc = get_full_url()."/tmp/$orderid/".$eachFile;
+        $imgid = "img-".$timeStamp;
+        $tableid = "table-".$timeStamp;
+        $buttonid = $eachFile;
+        $return .= "
+     <table id='$tableid'><tr><td><img width=100 height=100 src='$imgsrc' id='$imgid'/></td>
+      <td> <button  data-url='$imgsrc'   class='delete' id='$buttonid' >
+      <i class='glyphicon '></i>
+        <span>删除</span>    </button></td></tr></table>
+       ";
+    }
+    $return .= "<script> $('.delete').click(function(){
+            var id = this.id;
+           $.ajax({
+            url:'server/index.php',
+            type:'POST',
+            data:  {orderid:$orderid,delete:true,imgid:id},
+            success:function(data){
+                  tableid =  'table-' + id;
+                  $('#'+tableid).hide();
+            }
+        });
+        });</script> </textarea>";
+    echo $return;
+    return;
 }
+if(isset($_POST['delete']) && $_POST['delete']){
+    $orderid = $_POST['orderid'];
+    $img =  $_POST['imgid'];
+    $file =  get_upload_file($img,$orderid);
+  //  @unlink($file);
+    return;
+}
+show();
+function show(){
+    header("Content-type: text/html; charset=utf-8");
+//不存在当前上传文件则上传
+    $orderid = $_POST['orderid'];
+    $file = $_FILES['upload_file']['name'];
+    $time = time();
+    $upload_dir = get_upload_path(null,$orderid);
 
-$imgsrc =get_full_url().get_upload_path($file,$orderid);;
-if(!file_exists($upload_file))
-    move_uploaded_file($_FILES['upload_file']['tmp_name'],iconv('utf-8','gb2312',$upload_file));
+    if (!is_dir($upload_dir)) {
+        mkdir($upload_dir,0755, true);
+    }
+    $serverFileName =  trim_file_name($time, $file);
+    $upload_file = $upload_dir.$serverFileName;
+    $imgsrc =get_full_url().get_upload_path($serverFileName,$orderid);;
+    if(!file_exists($upload_file))
+        move_uploaded_file($_FILES['upload_file']['tmp_name'],iconv('utf-8','gb2312',$upload_file));
 //输出图片文件<img>标签
 
-$imgid = "img-".$orderid;
-$buttonid = "button-".$orderid;
-$deletestr = "onclick='$(#$imgid).hide();return false;'";
-echo "
-     <textarea><img width=100 height=100 src='$imgsrc' id='$imgid'/>
-      <button  class='btn btn-danger delete' id='$buttonid' onclick='$(\"#$imgid\").hide();$(\"#$buttonid\").hide();return false;'>
-       <i class='glyphicon '></i>
-        <span>删除</span>    </button>
-        </textarea>";
+    $imgid = "img-".$time;
+    $tableid = "table-".$time;
+    $buttonid = "$orderid-".$time;
+    $deletestr = "onclick='$(#$imgid).hide();return false;'";
+    echo "
+     <textarea><table id='$tableid'><tr><td><img width=100 height=100 src='$imgsrc' id='$imgid'/></td>
+      <td> <button  class='delete' id='$buttonid' >
+      <i class='glyphicon '></i>
+        <span>删除</span>    </button></td></tr></table>
+        <script> $('.delete').click(function(){
+            alert(this.id);
+        });</script> </textarea>";
+}
 
 
+function get_upload_file($file_name = null,$orderid=null, $version = null) {
+    $file_name = $file_name ? $file_name : '';
+
+    $version_dir = dirname(get_server_var('SCRIPT_FILENAME')).'/tmp/';
+    return $version_dir.$orderid."/".$file_name;
+}
 function get_upload_path($file_name = null,$orderid=null, $version = null) {
     $file_name = $file_name ? $file_name : '';
     if($file_name){
@@ -48,4 +105,36 @@ function get_full_url() {
             ($https && $_SERVER['SERVER_PORT'] === 443 ||
             $_SERVER['SERVER_PORT'] === 80 ? '' : ':'.$_SERVER['SERVER_PORT']))).
         substr($_SERVER['SCRIPT_NAME'],0, strrpos($_SERVER['SCRIPT_NAME'], '/'));
+}
+
+function readFileArr($dir){
+//PHP遍历文件夹下所有文件
+    $handle=opendir($dir.".");
+//定义用于存储文件名的数组
+    $array_file = array();
+    while (false !== ($file = readdir($handle)))
+    {
+        if ($file != "." && $file != "..") {
+            $array_file[] = $file; //输出文件名
+        }
+    }
+    closedir($handle);
+    return $array_file;
+}
+
+function trim_file_name($time, $name) {
+    // Remove path information and dots around the filename, to prevent uploading
+    // into different directories or replacing hidden system files.
+    // Also remove control characters and spaces (\x00..\x20) around the filename:
+    $name = trim(basename(stripslashes($name)), ".\x00..\x20");
+    // Use a timestamp for empty filenames:
+    if (!$name) {
+        $name = str_replace('.', '-', microtime(true));
+    }
+
+    $parts = explode('.', $name);
+    $extIndex = count($parts) - 1;
+    $ext = strtolower(@$parts[$extIndex]);
+   return $time.".$ext";
+
 }
