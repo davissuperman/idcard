@@ -4,6 +4,8 @@ Options +FollowSymLinks
 
    RewriteEngine on
 
+    RewriteCond %{HTTPS} !on
+    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
 
 
    # if a directory or a file exists, use it directly
