@@ -138,7 +138,7 @@ function get_full_url() {
 
 function readFileArr($dir){
 //PHP遍历文件夹下所有文件
-    $handle=opendir($dir.".");
+    $handle=opendir($dir);
 //定义用于存储文件名的数组
     $array_file = array();
     while (false !== ($file = readdir($handle)))
