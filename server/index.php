@@ -53,6 +53,16 @@ function show(){
 //不存在当前上传文件则上传
     $orderid = $_POST['orderid'];
     $file = $_FILES['upload_file']['name'];
+    $type = $_FILES["upload_file"]["type"] ;
+    if(!stristr($type,'image' )){
+        echo " <textarea><font color='red'><div>文件类型错误，格式: bmp, png, jpeg, jpg, gif</div></font></textarea>";
+        return;
+    }
+    $size = $_FILES['upload_file']['size']/1024;
+    if($size > 5000){
+        echo " <textarea><font color='red'><div>文件大于5M</div></font></textarea>";
+        return;
+    }
     $time = time();
     $upload_dir = get_upload_path(null,$orderid);
 
