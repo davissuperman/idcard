@@ -7,29 +7,32 @@ include "Order.php";
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>-->
     <title>Sneakerhead 身份证上传</title>
-    <link href="css/tmall-verify.css" rel="stylesheet" type="text/css">
+    <link href="/card/css/tmall-verify.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 
 <div id="header">
    <?php
         $orderInstance = new Order();
-        $orderInfo = $orderInstance->getOrderInfo();
-		$orderId = $orderInfo['orderid'];
-		$orderInfo = $orderInfo['Order'];
-		$orderDate = $orderInfo['OrderDate'];
-		$wangwangName = $orderInfo['Name'];
-       // $address = $orderInfo['Country'] ." ". $orderInfo['City']." ". $orderInfo['Address'];
-        $email = $orderInfo['Email'];
-        $phone = $orderInfo['Phone'];
-        $product = $orderInfo['Product'];
-        $orderDate =  $orderInfo['OrderDate'];
+        if($orderInstance->auth){
+            $orderInfo = $orderInstance->getOrderInfo();
+            $orderId = $orderInfo['orderid'];
+            $orderInfo = $orderInfo['Order'];
+            $orderDate = $orderInfo['OrderDate'];
+            $wangwangName = $orderInfo['Name'];
+            // $address = $orderInfo['Country'] ." ". $orderInfo['City']." ". $orderInfo['Address'];
+            $email = $orderInfo['Email'];
+            $phone = $orderInfo['Phone'];
+            $product = $orderInfo['Product'];
+            $orderDate =  $orderInfo['OrderDate'];
 
-        //收货人相关信息
-        $shipName = $orderInfo['ShipName'];
-        $shipPhone = $orderInfo['ShipPhone'];
-        $shipZip = $orderInfo['ShipZip'];
-        $shipAddress = $orderInfo['ShipAddress2'] ;
+            //收货人相关信息
+            $shipName = $orderInfo['ShipName'];
+            $shipPhone = $orderInfo['ShipPhone'];
+            $shipZip = $orderInfo['ShipZip'];
+            $shipAddress = $orderInfo['ShipAddress2'] ;
+        }
+
 ?>
     <div id="logo">
         <a href="http://sneakerhead-usa.tmall.hk/"><img src="http://img03.taobaocdn.com/L1/142/406133590/modules/tshop-um-MAINHEAD/assets/images/LOGO_index.png"></a>
@@ -66,7 +69,6 @@ include "Order.php";
     </p>
     <?php
     if($orderInstance->auth){
-    ?>
     ?>
     <div id="upload">
 <!--        <form id="" action="">-->
@@ -138,16 +140,19 @@ include "Order.php";
         </tbody>
 
     </table>
-
+    <?php
+    }else{
+        echo "<font color='red'>".$orderInstance->errorMessage."</font>";
+    }
+    ?>
 
 
 </div>
-<?php } else{echo $orderInstance->errorMessage;} ?>
 
 <div id="footer">
     <p>Copyright 2001 - 2014 Sneakerhead.com. All Rights Reserved.</p>
 </div>
-<script src="js/jquery.min.js"></script>
+<script src="/card/js/jquery.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
         var orderid = $("#orderid").val();

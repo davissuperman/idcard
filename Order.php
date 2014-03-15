@@ -6,15 +6,24 @@ class Order{
     public function __construct(){
         $requestUri = trim( $_SERVER['REQUEST_URI'],'/');
         $arr = explode("/",$requestUri);
-        $this->orderid = $arr[2];
-        $this->token = $arr[4];
-        $str = $this->orderid."sneakerhead";
-        if(md5($str) ==  $this->token){
-            $this->auth = true;
+        if(count($arr)<2){
+            $this->errorMessage = "订单号不能为空";
+        }else if(count($arr)<4){
+            $this->errorMessage = "订单号无此权限";
+        }else{
+            $this->orderid = $arr[2];
+            $this->token = $arr[4];
+            $str = $this->orderid."sneakerhead";
+            if(md5($str) ==  $this->token){
+                $this->auth = true;
+            }else{
+                $this->errorMessage = "订单号无此权限";
+            }
         }
 
+        //$this->auth = true;
 //        echo trim( $_SERVER['REQUEST_URI'],'/');
-//        $this->display($arr);
+//        $this->display($_SERVER);
     }
     public function getOrderInfo(){
         $orderId = $this->orderid ;
