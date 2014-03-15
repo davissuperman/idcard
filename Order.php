@@ -1,9 +1,26 @@
 <?php
 class Order{
-    static function getOrderInfo(){
-        $orderId = trim($_GET['orderid']);
+    public $orderid;
+    public $auth = false;
+    public $errorMessage;
+    public function __construct(){
+        $requestUri = trim( $_SERVER['REQUEST_URI'],'/');
+        $arr = explode("/",$requestUri);
+        $this->orderid = $arr[2];
+        $this->token = $arr[4];
+        $str = $this->orderid."sneakerhead";
+        if(md5($str) ==  $this->token){
+            $this->auth = true;
+        }
+
+//        echo trim( $_SERVER['REQUEST_URI'],'/');
+//        $this->display($arr);
+    }
+    public function getOrderInfo(){
+        $orderId = $this->orderid ;
         if(!$orderId){
-            echo"订单号错误，不能为空";die;
+            $this->errorMessage = "订单号错误，不能为空";
+            $this->auth = false;
         }
         if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_ADDR'] == '127.0.0.1') {
             $url = "http://10.0.0.24:10009/Order.ashx?OrderID=$orderId";
@@ -20,5 +37,10 @@ class Order{
         $result = json_decode ($r ,true);
         $result['orderid'] = $orderId;
         return $result;
+    }
+    public function display($var){
+        echo "<pre>";
+        var_dump($var);
+        echo "</pre>";
     }
 }

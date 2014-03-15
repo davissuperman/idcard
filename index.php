@@ -13,7 +13,8 @@ include "Order.php";
 
 <div id="header">
    <?php
-        $orderInfo = Order ::getOrderInfo();
+        $orderInstance = new Order();
+        $orderInfo = $orderInstance->getOrderInfo();
 		$orderId = $orderInfo['orderid'];
 		$orderInfo = $orderInfo['Order'];
 		$orderDate = $orderInfo['OrderDate'];
@@ -63,6 +64,10 @@ include "Order.php";
         送老婆 送妈妈 爱她就送她最好的 1 彼岸花原创正品 选女王包 请认准彼岸花品牌 只此一家 别无分号 2 采用高档浅金五金 性价比超高 3 品牌包装 吊牌齐全 自己用 有品味 送朋友 有面子！！！！
         柔美设计，以童话故事中白雪公主为原型 百褶裙设计 华美异常 2 进口复合材质 女包材质之王3：品牌包装 吊牌齐全 自己用 有品味 送朋友 有面子
     </p>
+    <?php
+    if($orderInstance->auth){
+    ?>
+    ?>
     <div id="upload">
 <!--        <form id="" action="">-->
             <button  onclick="getElementById('inputfile').click()">上传身份证</button>
@@ -137,7 +142,7 @@ include "Order.php";
 
 
 </div>
-
+<?php } else{echo $orderInstance->errorMessage;} ?>
 
 <div id="footer">
     <p>Copyright 2001 - 2014 Sneakerhead.com. All Rights Reserved.</p>
