@@ -7,7 +7,7 @@ include "Order.php";
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>-->
     <title>Sneakerhead 身份证上传</title>
-    <link href="/card/css/tmall-verify.css" rel="stylesheet" type="text/css">
+    <link href="/idcard/css/tmall-verify.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 
@@ -152,7 +152,7 @@ include "Order.php";
 <div id="footer">
     <p>Copyright 2001 - 2014 Sneakerhead.com. All Rights Reserved.</p>
 </div>
-<script src="/card/js/jquery.min.js"></script>
+<script src="/idcard/js/jquery.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
         var orderid = $("#orderid").val();
@@ -166,7 +166,7 @@ include "Order.php";
             });
             data.append('orderid',orderid);
             $.ajax({
-                url:'server/index.php',
+                url:'/idcard/server/index.php',
                 type:'POST',
                 data:data,
                 cache: false,
@@ -187,8 +187,9 @@ include "Order.php";
         });
 
         // Load existing files:
+
         $.ajax({
-            url:'server/index.php',
+            url:'/idcard/server/index.php',
             type:'POST',
             data:  {orderid:orderid,getexist:true},
             success:function(data){

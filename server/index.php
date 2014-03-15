@@ -5,25 +5,30 @@ if(isset($_POST['getexist']) && $_POST['getexist']){
     $dir =   dirname(get_server_var('SCRIPT_FILENAME')).'/tmp/'.$orderid;
     $fileArr = readFileArr($dir);
  //   print_r($fileArr);
-    $return = "<textarea>";
+    $return = "<textarea><table>";
     foreach($fileArr as $eachFile){
         $parts = explode('.', $eachFile);
         $timeStamp = $parts[0];
         $imgsrc = get_full_url()."/tmp/$orderid/".$eachFile;
         $imgid = "img-".$timeStamp;
-        $tableid = "table-".$timeStamp;
+        $trid = "tr-".$timeStamp;
         $buttonid = $eachFile;
         $return .= "
-     <table id='$tableid'><tr><td><img width=100 height=100 src='$imgsrc' id='$imgid'/></td>
+     <tr id='$trid'><td><img width=100 height=100 src='$imgsrc' id='$imgid'/></td>
       <td> <button  data-url='$imgsrc'   class='delete' id='$buttonid' >
       <i class='glyphicon '></i>
-        <span>删除</span>    </button></td></tr></table>
+        <span>删除</span>    </button></td></tr>
        ";
     }
-    $return .= "<script> $('.delete').click(function(){
+    $return .= "</table><script> $('.delete').click(function(){
             var id = this.id;
+            var strinfo = new Array();
+            strinfo = id.split('.');
+            timestamp = strinfo[0];
+              trid =  'tr-' + timestamp;
+                  $('#'+trid).hide();
            $.ajax({
-            url:'server/index.php',
+            url:'/idcard/server/index.php',
             type:'POST',
             data:  {orderid:$orderid,delete:true,imgid:id},
             success:function(data){
@@ -39,7 +44,7 @@ if(isset($_POST['delete']) && $_POST['delete']){
     $orderid = $_POST['orderid'];
     $img =  $_POST['imgid'];
     $file =  get_upload_file($img,$orderid);
-  //  @unlink($file);
+    echo @unlink($file);
     return;
 }
 show();
@@ -63,7 +68,7 @@ function show(){
 
     $imgid = "img-".$time;
     $tableid = "table-".$time;
-    $buttonid = "$orderid-".$time;
+    $buttonid = $serverFileName;
     $deletestr = "onclick='$(#$imgid).hide();return false;'";
     echo "
      <textarea><table id='$tableid'><tr><td><img width=100 height=100 src='$imgsrc' id='$imgid'/></td>
@@ -71,7 +76,21 @@ function show(){
       <i class='glyphicon '></i>
         <span>删除</span>    </button></td></tr></table>
         <script> $('.delete').click(function(){
-            alert(this.id);
+            var id = this.id;
+            var strinfo = new Array();
+            strinfo = id.split('.');
+            timestamp = strinfo[0];
+            tableid =  'table-' + timestamp;
+            $('#'+tableid).hide();
+              $.ajax({
+            url:'/idcard/server/index.php',
+            type:'POST',
+            data:  {orderid:$orderid,delete:true,imgid:id},
+            success:function(data){
+                  tableid =  'table-' + id;
+                  $('#'+tableid).hide();
+            }
+        });
         });</script> </textarea>";
 }
 
