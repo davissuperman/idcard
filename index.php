@@ -78,6 +78,7 @@ include "Order.php";
             </p>
             <input type="file" name="image" style="opacity:0;filter:alpha(opacity=0);" id="inputfile"/>
             <input type="hidden" name="orderid"  id="orderid"  value="<?php echo $orderId; ?>">
+            <div id="myShow"><img src="/idcard/img/loading.gif"> </div>
 <!--        </form>-->
             <div id="feedback"></div>    <!-- 响应返回数据容器 -->
     </div>
@@ -173,7 +174,8 @@ include "Order.php";
                 contentType: false,    //不可缺
                 processData: false,    //不可缺
                 beforeSend:function(XMLHttpRequest){
-                    $("#myShow").css({display:"",top:"50%",left:"50%",position:"absolute"});
+//                    $("#myShow").css({display:"",top:"50%",left:"50%",position:"absolute"});
+                    $("#myShow").show();
                 },
                 success:function(data){
                     data = $(data).html();
@@ -192,6 +194,9 @@ include "Order.php";
             url:'/idcard/server/index.php',
             type:'POST',
             data:  {orderid:orderid,getexist:true},
+            beforeSend:function(XMLHttpRequest){
+                $("#myShow").show();
+            },
             success:function(data){
                 data = $(data).html();
                 var innerhtml ="<div style='padding-bottom:10px;'>" + data.replace(/&lt;/g,'<').replace(/&gt;/g,'>') + "</div>";
