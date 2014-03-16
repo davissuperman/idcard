@@ -128,7 +128,7 @@ function get_upload_file($file_name = null,$orderid=null, $version = null) {
 function get_upload_path($file_name = null,$orderid=null, $version = null) {
     $file_name = $file_name ? $file_name : '';
     if($file_name){
-        return "/tmp/".$orderid."/".$file_name;;
+        return "/tmp/".$orderid."/"."thumbnail_".$file_name;;
     }else{
         $version_dir = dirname(get_server_var('SCRIPT_FILENAME')).'/tmp/';
         if ($version_dir) {
