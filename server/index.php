@@ -200,7 +200,8 @@ function img2thumb($src_img, $dst_img, $width = 100, $height = 100, $cut = 0, $p
     $createfun = 'imagecreatefrom' . ($type == 'jpg' ? 'jpeg' : $type);
 
     $dst_h = $height;
-    $dst_w = $width;
+//    $dst_w = $width;
+    $dst_w = $src_w*$dst_h/$src_h;
     $x = $y = 0;
 
     /**
