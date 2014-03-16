@@ -185,7 +185,7 @@ function fileext($file)
 {
     return pathinfo($file, PATHINFO_EXTENSION);
 }
-function img2thumb($src_img, $dst_img, $width = 75, $height = 75, $cut = 0, $proportion = 0)
+function img2thumb($src_img, $dst_img, $width = 100, $height = 100, $cut = 0, $proportion = 0)
 {
     if(!is_file($src_img))
     {
