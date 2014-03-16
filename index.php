@@ -1,42 +1,42 @@
 <?php
 include "Order.php";
 ?>
-<!DOCTYPE html>
 <html>
 <head>
-    <title>sneakerhead身份证上传</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta charset="UTF-8">
-
-    <!-- Bootstrap -->
-<!--    <link rel="stylesheet" href="css/bootstrap.min.css">-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>-->
+    <title>Sneakerhead 身份证上传</title>
+    <link href="/idcard/css/tmall-verify.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
 
     <!--    <link rel="stylesheet" href="css/bootstrap.min.css">-->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/jquery.fileupload.css">
-    <link rel="stylesheet" href="css/jquery.fileupload-ui.css">
-	    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <!--<script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.min.js"></script>-->
-    <!--<script src="http://cdn.bootcss.com/respond.js/1.3.0/respond.min.js"></script>-->
-    <![endif]-->
+    <link rel="stylesheet" href="/idcard/css/style.css">
+    <link rel="stylesheet" href="/idcard/css/jquery.fileupload.css">
+    <link rel="stylesheet" href="/idcard/css/jquery.fileupload-ui.css">
+    <style type="text/css">
+        body {
+            background-color: #FFFFFF;
+            color: #FFFFFF;
+            font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+            font-size: 14px;
+            line-height: 1.42857;
+        }
+
+    </style>
 </head>
 <body>
 
-<div class="container"  id="main">
-    <!-- Tab panes -->
-    <form id="fileupload" action="" method="POST" enctype="multipart/form-data">
-	 <h2 class="form-signin-heading">请提交身份证信息</h2>
-       <p class="text-danger"><strong>上传的照片只用于海关个人包裹报关</strong>详情请点击 <a href="#" target="_blank">天猫海关需知</a></p>
+<div id="header">
     <?php
-        $orderInfo = Order ::getOrderInfo();
-		$orderId = $orderInfo['orderid'];
-		$orderInfo = $orderInfo['Order'];
-		$orderDate = $orderInfo['OrderDate'];
-		$wangwangName = $orderInfo['Name'];
-        $address = $orderInfo['Country'] ." ". $orderInfo['City']." ". $orderInfo['Address'];
+    $orderInstance = new Order();
+    if($orderInstance->auth){
+        $orderInfo = $orderInstance->getOrderInfo();
+        $orderId = $orderInfo['orderid'];
+        $orderInfo = $orderInfo['Order'];
+        $orderDate = $orderInfo['OrderDate'];
+        $wangwangName = $orderInfo['Name'];
+        // $address = $orderInfo['Country'] ." ". $orderInfo['City']." ". $orderInfo['Address'];
         $email = $orderInfo['Email'];
         $phone = $orderInfo['Phone'];
         $product = $orderInfo['Product'];
@@ -46,186 +46,144 @@ include "Order.php";
         $shipName = $orderInfo['ShipName'];
         $shipPhone = $orderInfo['ShipPhone'];
         $shipZip = $orderInfo['ShipZip'];
-        $shipAddress =  $orderInfo['ShipCountry'] .$orderInfo['ShipCity'].$orderInfo['ShipAddress'].$orderInfo['ShipAddress2'] ;
-//    var_dump($orderInfo);
-    /*
-       echo  <<<HTML
+        $shipAddress = $orderInfo['ShipAddress2'] ;
+    }
 
-           <div class="row">
-               <div class="col-md-4">订单日期</div>
-               <div class="col-md-8">$orderDate</div>
-           </div>
-           <div class="row">
-               <div class="col-md-4">旺旺昵称</div>
-               <div class="col-md-8">$wangwangName</div>
-           </div>
-
-        <div class="panel-group" id="accordion">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                         <h4 class="panel-title">  产品1</h4>
-
-                        </a>
-                    </h4>
-                </div>
-                <div id="collapseOne" class="panel-collapse collapse in">
-                    <div class="panel-body">
-                        产品名称：
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br/>
-HTML;
-    */
     ?>
-     <!-- Nav tabs -->
-     <ul class="nav nav-tabs">
-         <li class="active"><a href="#home" data-toggle="tab">订单信息</a></li>
-         <li><a href="#profile" data-toggle="tab">收货信息</a></li>
-     </ul>
-     <div class="tabs-panels tab-content">
-         <div class="tab-pane active" id="home">
-             <div class="info-box order-info ks-switchable-panel-internal9" style="display: block;">
-                 <div class="bd">
-                     <table>
-                         <colgroup>
-                             <col class="item">
-                             <col class="sku">
-                             <col class="status">
-                             <col class="service">
-                             <col class="price">
-                             <col class="num">
-                             <col class="discount">
-                             <col class="order-price">
-                         </colgroup>
-                         <tbody class="contact-info">
-                         <tr>
-                             <th colspan="2"> 用户详情 </th>
-                         </tr>
-                         <tr>
-                             <td colspan="2">
-                                 旺旺昵称：
-                                 <span class="nickname"><?php echo $wangwangName;?></span>
-                             </td>
-                             <td valign="top"  >邮件：<span><?php echo $email?></span>
-                             </td>
-                         </tr>
-                         <tr>
-                             <td colspan="2">所在地区：<span class="city"><?php echo $address?> </span></td>
-                             <td class="contact" colspan="6">联系电话：<span class="tel"><?php echo $phone?></span></td>
-                         </tr>
-                         </tbody>
-                         <tbody class="misc-info">
-                         <tr class="sep-row">
-                             <td colspan="2"></td>
-                         </tr>
-<!--                         <tr>-->
-<!--                             <td colspan="8">-->
-<!--                                 <span class="">订单编号：</span>-->
-<!--                                 <span class="order-num">558494912604315</span>-->
-<!--                             </td>-->
-<!--                         </tr>-->
-                         <tr>
-                             <td colspan="2">
-                                 <span class="">订单成交时间：</span>
-                                 <span class="trade-time"><?php echo $orderDate;?></span>
-                             </td>
-                         </tr>
-                         </tbody>
-                         <!-- 订单信息 -->
-                         <tbody class="order">
-                         <tr class="sep-row">
-                             <td colspan="2"></td>
-                         </tr>
-                         <tr class="order-hd">
-                             <th class="item last">宝贝</th>
-<!--                             <th class="order-price last">商品总价(元)</th>-->
-                         </tr>
-                         <?php foreach($product as $each){
-                                    $pName = $each['ProductName'];
-                                    $price = $each['PricePerUnit'];
-                                    echo <<<HTML
- <tr class="order-item">
-                             <td class="item">
-                                 <div class="pic-info">
-                                 </div>
-                                 <div class="txt-info">
-                                     <div class="desc">
-                                         <span class="name">
-                                                $pName
-                                         </span>
-                                     </div>
-                                 </div>
-                             </td>
-                             <!--<td rowspan="1" class="order-price">-->
-                                 <!--$price-->
-                             <!--</td>-->
-                         </tr>
-HTML;
+    <div id="logo">
+        <a href="http://sneakerhead-usa.tmall.hk/"><img src="http://img03.taobaocdn.com/L1/142/406133590/modules/tshop-um-MAINHEAD/assets/images/LOGO_index.png"></a>
+    </div>
 
-                            }
-                        ?>
-<!--                         <tr class="order-ft">-->
-<!--                             <td colspan="8">-->
-<!--                                 <div colspan="6" class="get-money">-->
-<!--                                     <br>-->
-<!--                                     实收款：-->
-<!--                                     <strong>614.00</strong>元-->
-<!--                                 </div>-->
-<!--                             </td>-->
-<!--                         </tr>-->
-                         </tbody>
-                     </table>
-                 </div>
-             </div>
-         </div>
-         <div class="tab-pane" id="profile">
-             <table class="simple-list logistics-info">
-                 <tbody>
-                 <tr>
-                     <th>收货地址：</th>
-                     <td><?php echo $shipName?> ，<?php echo $shipPhone;?> <?php echo $shipAddress?>，<?php echo $shipZip; ?></td>
-                 </tr>
-             </table>
-         </div>
-     </div>
-       <div class="row fileupload-buttonbar">
-           <div class="col-lg-7">
-               <!-- The fileinput-button span is used to style the file input field as button -->
+    <div id="main-nav" class="clearfix">
+        <ul>
+            <li id="main-nav-home"><a href="http://sneakerhead-usa.tmall.hk/">首页</a></li>
+            <li id="main-nav-new"><a href="http://sneakerhead-usa.tmall.hk/p/new.htm?spm=a1z10.1.w7183964-3595196440.3.i6B3vI">新品上市</a></li>
+            <li><a href="http://sneakerhead-usa.tmall.hk/p/man.htm?spm=a1z10.4.w7183964-3595196440.4.oXMTJW">男鞋</a></li>
+            <li><a href="http://sneakerhead-usa.tmall.hk/p/woman.htm?spm=a1z10.4.w7183964-3595196440.5.DUYVA0">女鞋</a></li>
+            <li><a href="http://sneakerhead-usa.tmall.hk/p/kodomo.htm?spm=a1z10.4.w7183964-3595196440.6.9lDb9v">幼童鞋</a></li>
+            <li id="main-nav-accessory"><a href="http://sneakerhead-usa.tmall.hk/p/fuku.htm?spm=a1z10.4.w7183964-3595196440.7.F94NjR">服饰</a></li>
+            <li id="main-nav-about"><a href="http://sneakerhead-usa.tmall.hk/p/about.htm?spm=a1z10.4.w7183964-3595196440.8.B3WxOk">关于我们</a></li>
+        </ul>
+    </div>
+
+</div>
+
+
+<div id="wrapper">
+
+    <h1>SNEAKERHEAD旗舰店发货提示</h1>
+
+
+    <h2>亲爱的顾客您好</h2>
+    <p>
+        送老婆 送妈妈 爱她就送她最好的 1 彼岸花原创正品 选女王包 请认准彼岸花品牌 只此一家 别无分号 2 采用高档浅金五金 性价比超高 3 品牌包装 吊牌齐全 自己用 有品味 送朋友 有面子！！！！
+        柔美设计，以童话故事中白雪公主为原型 百褶裙设计 华美异常 2 进口复合材质 女包材质之王3：品牌包装 吊牌齐全 自己用 有品味 送朋友 有面子
+    </p>
+    <p>
+        送老婆 送妈妈 爱她就送她最好的 1 彼岸花原创正品 选女王包 请认准彼岸花品牌 只此一家 别无分号 2 采用高档浅金五金 性价比超高 3 品牌包装 吊牌齐全 自己用 有品味 送朋友 有面子！！！！
+        柔美设计，以童话故事中白雪公主为原型 百褶裙设计 华美异常 2 进口复合材质 女包材质之王3：品牌包装 吊牌齐全 自己用 有品味 送朋友 有面子
+    </p>
+    <?php
+    if($orderInstance->auth){
+        ?>
+        <div id="upload">
+    <form id="fileupload" action="" method="POST" enctype="multipart/form-data">
+        <div class="row fileupload-buttonbar">
+            <div>
+                <!-- The fileinput-button span is used to style the file input field as button -->
                 <span class="btn btn-success fileinput-button">
                     <i class="glyphicon glyphicon-plus"></i>
-                    <span>上传...</span>
+                    <span>上传身份证</span>
                     <input type="file" name="files[]" multiple>
                     <input type="hidden" name="orderid" value="<?php echo $orderId; ?>" id="orderid">
                 </span>
-               <p class="upload_tips">
-                   大小: 不超过2M,&nbsp;&nbsp;&nbsp;&nbsp;格式: bmp, png, jpeg, jpg, gif
-               </p>
-               <!-- The global file processing state -->
-               <span class="fileupload-process"></span>
-           </div>
-           <!-- The global progress state -->
-           <div class="col-lg-5 fileupload-progress fade">
-               <!-- The global progress bar -->
-               <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-                   <div class="progress-bar progress-bar-success" style="width:0%;"></div>
-               </div>
-               <!-- The extended global progress state -->
-               <div class="progress-extended">&nbsp;</div>
-           </div>
-       </div>
-       <!-- The table listing the files available for upload/download -->
-       <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
-
-   </form>
-
-</div> <!-- /container -->
+                <p class="upload_tips">
+                    大小: 不超过2M,&nbsp;&nbsp;&nbsp;&nbsp;格式: bmp, png, jpeg, jpg, gif
+                </p>
+                <!-- The global file processing state -->
+                <span class="fileupload-process"></span>
+            </div>
+            <!-- The global progress state -->
+            <div class="col-lg-5 fileupload-progress fade">
+                <!-- The global progress bar -->
+                <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-bar progress-bar-success" style="width:0%;"></div>
+                </div>
+                <!-- The extended global progress state -->
+                <div class="progress-extended">&nbsp;</div>
+            </div>
+        </div>
+        <!-- The table listing the files available for upload/download -->
+        <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
+</form>
+            </div>
 
 
-<!-- The template to display files available for upload -->
+
+        <h2>物流讯息</h2>
+        <table id="table-shipping">
+            <thead>
+            <tr>
+                <td>
+                    快递收件讯息
+                </td>
+                <td>
+                    订单处理进度
+                </td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <h3><?php echo $shipName?> (女士/先生)</h3>
+                    <!--                <p>浙江省 杭州市 余杭区 文一西路969号3号小邮局 (天猫 收) 邮编：311121</p>-->
+                    <P><?php echo $shipAddress?>  邮编：<?php echo $shipZip; ?></P>
+                </td>
+                <td>
+                    <p class="wait">等待身份证上传</p>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <h2>订单明细</h2>
+        <table>
+            <tbody>
+            <?php
+            if(isset($product['ProductName'])){
+                $product = array($product);
+            }
+            foreach($product as $each){
+                $pName = $each['ProductName'];
+                $pSrc =  $each['ImageUrl'];
+                $eursize = $each['Eursize'];
+                if(strtolower($each['Gender']) == "men"){
+                    $sex = "男子";
+                }else if(strtolower($each['Gender']) == "woman"){
+                    $sex = "女子";
+                }
+                ?>
+                <tr>
+                    <td class="order-img">
+                        <a href="#"><img src="<?php echo $pSrc?>"></a>
+                    </td>
+                    <td>
+                        <p class="order-info"><?php echo $pName;?></p>
+                        <p class="order-info">鞋码: 男子<?php echo $eursize;?>码</p>
+                    </td>
+                </tr>
+            <?php } ?>
+            </tbody>
+
+        </table>
+    <?php
+    }else{
+        echo "<font color='red'>".$orderInstance->errorMessage."</font>";
+    }
+    ?>
+
+
+</div>
 <script id="template-upload" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
     <tr class="template-upload fade">
@@ -285,67 +243,39 @@ HTML;
     </tr>
 {% } %}
 </script>
-
-
-</div> <!-- /container -->
-<script type="text/javascript">
-    var loading_dom = document.createElement("div");
-    with(loading_dom){
-        style.width='100%';
-        style.height = window.innerHeight+'px';
-        loading_dom.style.position ='absolute';
-        style.top ='0';
-        style.zIndex ='999999';
-        style.background ='#ffffff';
-        addEventListener('touchstart',function(e){
-            e.preventDefault();
-        });
-        addEventListener('touchmove',function(e){
-            e.preventDefault();
-        });
-        addEventListener('touchend',function(e){
-            e.preventDefault();
-        });
-        innerHTML = "<p style='text-align:center;margin-top:"+(window.innerHeight/2-50)+"px'><span class='icon icon-spinner5' style='font-size:24px;color:#444'></span><br />载入中..</p>";
-    }
-    document.body.appendChild(loading_dom);
-    var loadedpage = function(){
-        document.getElementById('main').style.visibility='visible';
-        loading_dom.style.display = 'none';
-        document.body.removeChild(loading_dom);
-    };
-    window.onload = loadedpage;
-</script>
-<script src="js/jquery.min.js"></script>
+<div id="footer">
+    <p>Copyright 2001 - 2014 Sneakerhead.com. All Rights Reserved.</p>
+</div>
+<script src="/idcard/js/jquery.min.js"></script>
 <!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
-<script src="js/vendor/jquery.ui.widget.js"></script>
+<script src="/idcard/js/vendor/jquery.ui.widget.js"></script>
 <!-- The Templates plugin is included to render the upload/download listings -->
-<script src="js/tmpl.min.js"></script>
+<script src="/idcard/js/tmpl.min.js"></script>
 <!-- The Load Image plugin is included for the preview images and image resizing functionality -->
-<script src="js/load-image.min.js"></script>
+<script src="/idcard/js/load-image.min.js"></script>
 <!-- The Canvas to Blob plugin is included for image resizing functionality -->
-<script src="js/canvas-to-blob.min.js"></script>
+<script src="/idcard/js/canvas-to-blob.min.js"></script>
 <!-- Bootstrap JS is not required, but included for the responsive demo navigation -->
-<script src="js/bootstrap.min.js"></script>
+<script src="/idcard/js/bootstrap.min.js"></script>
 <!-- blueimp Gallery script -->
 <!--<script src="http://blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>-->
 <!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
-<script src="js/jquery.iframe-transport.js"></script>
+<script src="/idcard/js/jquery.iframe-transport.js"></script>
 <!-- The basic File Upload plugin -->
-<script src="js/jquery.fileupload.js"></script>
+<script src="/idcard/js/jquery.fileupload.js"></script>
 <!-- The File Upload processing plugin -->
-<script src="js/jquery.fileupload-process.js"></script>
+<script src="/idcard/js/jquery.fileupload-process.js"></script>
 <!-- The File Upload image preview & resize plugin -->
-<script src="js/jquery.fileupload-image.js"></script>
+<script src="/idcard/js/jquery.fileupload-image.js"></script>
 <!-- The File Upload audio preview plugin -->
 <!--<script src="js/jquery.fileupload-audio.js"></script>-->
 <!-- The File Upload video preview plugin -->
 <!--<script src="js/jquery.fileupload-video.js"></script>-->
 <!-- The File Upload validation plugin -->
-<script src="js/jquery.fileupload-validate.js"></script>
+<script src="/idcard/js/jquery.fileupload-validate.js"></script>
 <!-- The File Upload user interface plugin -->
-<script src="js/jquery.fileupload-ui.js"></script>
+<script src="/idcard/js/jquery.fileupload-ui.js"></script>
 <!-- The main application script -->
-<script src="js/main.js"></script>
+<script src="/idcard/js/main.js"></script>
 </body>
 </html>
