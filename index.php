@@ -74,7 +74,7 @@ include "Order.php";
 <!--        <form id="" action="">-->
             <button  onclick="getElementById('inputfile').click()">上传身份证</button>
             <p id="upload_tips">
-                大小: 不超过2M,&nbsp;&nbsp;&nbsp;&nbsp;格式: bmp, png, jpeg, jpg, gif
+                大小: 不超过5M,&nbsp;&nbsp;&nbsp;&nbsp;格式: bmp, png, jpeg, jpg, gif
             </p>
             <input type="file" name="image" style="opacity:0;filter:alpha(opacity=0);" id="inputfile"/>
             <input type="hidden" name="orderid"  id="orderid"  value="<?php echo $orderId; ?>">
