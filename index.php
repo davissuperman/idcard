@@ -98,7 +98,7 @@ include "Order.php";
                     <input type="hidden" name="orderid" value="<?php echo $orderId; ?>" id="orderid">
                 </span>
                 <p class="upload_tips">
-                    大小: 不超过2M,&nbsp;&nbsp;&nbsp;&nbsp;格式: bmp, png, jpeg, jpg, gif
+                    大小: 不超过5M,&nbsp;&nbsp;&nbsp;&nbsp;格式: bmp, png, jpeg, jpg, gif
                 </p>
                 <!-- The global file processing state -->
                 <span class="fileupload-process"></span>

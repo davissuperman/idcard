@@ -28,6 +28,8 @@ $(function () {
         url: '/idcard/server/php/index.php?orderid='+$("#orderid").val()
     });
 
+//    if($(".preview").html())
+
     // Enable iframe cross-domain access via redirect option:
     $('#fileupload').fileupload(
         'option',
@@ -48,7 +50,15 @@ $(function () {
         }).always(function () {
             $(this).removeClass('fileupload-processing');
         }).done(function (result) {
+                if(result['files'] != ''){
+                    $(".wait").html("等待身份证审核");
+                }
+
             $(this).fileupload('option', 'done')
                 .call(this, $.Event('done'), {result: result});
         });
+
+//    if($(".files").html() != ''){
+//        $(".wait").html("here");
+//    }
 });
