@@ -25,7 +25,10 @@ $(function () {
         dataType: 'json',
         autoUpload: true,
         user_dirs:true,
-        url: '/idcard/server/php/index.php?orderid='+$("#orderid").val()
+        url: '/idcard/server/php/index.php?orderid='+$("#orderid").val(),
+        change: function (e, data) {
+            $(".wait").html('等待身份证审核');
+        }
     });
 
 //    if($(".preview").html())
