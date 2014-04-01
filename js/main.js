@@ -53,9 +53,14 @@ $(function () {
         }).always(function () {
             $(this).removeClass('fileupload-processing');
         }).done(function (result) {
-                if(result['files'] != ''){
-                    $(".wait").html("等待身份证审核");
+                if($("#auditstatus").val() <= 1){
+                    if(result['files'] != ''){
+                        $(".wait").html("等待身份证上传");
+                    }else{
+                        $(".wait").html("等待身份证上传");
+                    }
                 }
+
 
             $(this).fileupload('option', 'done')
                 .call(this, $.Event('done'), {result: result});

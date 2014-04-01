@@ -1306,12 +1306,39 @@ class UploadHandler
                 $content_range
             );
         }
+        $this->saveImages($files);
         return $this->generate_response(
             array($this->options['param_name'] => $files),
             $print_response
         );
     }
-
+    public function saveImages($files){
+        foreach($files as $each){
+            $url =  $each->url;
+            $this->curlSaveImage($url);
+        }
+    }
+    public function curlSaveImage($filePath){
+        $data = array();
+        $data['ImageUrl'] = $filePath;
+        $data['OrderID'] = $this->_orderId;
+        $data['Flag'] = 1;
+        //$url='http://180.166.202.70/kaixinwabao/index.php/api/user/login';
+        $url='http://10.0.0.24:10009/UploadIDImage.ashx';
+        $o="";
+        foreach ($data as $k=>$v)
+        {
+            $o.= "$k=".urlencode($v)."&";
+        }
+        $data=substr($o,0,-1);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_URL,$url);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $r = curl_exec($ch);
+        $result = json_decode ($r ,true);
+    }
     public function delete($print_response = true) {
         $file_names = $this->get_file_names_params();
         if (empty($file_names)) {

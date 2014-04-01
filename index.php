@@ -39,6 +39,7 @@ include "Order.php";
         $buttonUpload = false;
         $style = "";
         $auditStatus = 1;
+        $cardVerifyText = '等待身份证上传';
         switch($auditStatus){
             case 0:
                 //未上传，需要显示 上传按钮
@@ -46,11 +47,13 @@ include "Order.php";
                 break;
             case 1:
                 //等待审核,不显示上传按钮,只显示图片
-                $style = "style='display:none'";
+                $buttonUpload = true;
+                $cardVerifyText = '等待身份证审核';
                 break;
             case 2:
                 //审核通过，显示审核通过的指定的图片
                 $style = "style='display:none'";
+                $cardVerifyText = '审核通过';
                 break;
             case 3:
                 //审核未通过,需要显示上传按钮
@@ -121,6 +124,7 @@ include "Order.php";
                       <span>上传身份证</span>
                     <input type="file" name="files[]" multiple>
                     <input type="hidden" name="orderid" value="<?php echo $orderId; ?>" id="orderid">
+                    <input type="hidden" name="auditstatus" value="<?php echo $auditStatus; ?>" id="auditstatus">
                 </span>
                 <p class="upload_tips">
                     大小: 不超过5M,&nbsp;&nbsp;&nbsp;&nbsp;格式: bmp, png, jpeg, jpg, gif
@@ -166,7 +170,7 @@ include "Order.php";
                     <P><?php echo $shipAddress?>  邮编：<?php echo $shipZip; ?></P>
                 </td>
                 <td>
-                    <p class="wait">等待身份证上传</p>
+                    <p class="wait"><?php echo $cardVerifyText; ?></p>
                 </td>
             </tr>
             </tbody>
@@ -260,7 +264,7 @@ include "Order.php";
                     <i class="glyphicon glyphicon-trash"></i>
                     <span>删除</span>
                 </button>
-                <?php }else{ echo ' <span class="cardverify">等待身份证审核</span>';}?>
+                <?php }else{ echo ' <span class="cardverify">'.$cardVerifyText.'</span>';}?>
             {% } else { %}
                 <button class="btn btn-warning cancel">
                     <i class="glyphicon glyphicon-ban-circle"></i>
