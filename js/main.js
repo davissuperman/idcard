@@ -25,7 +25,8 @@ $(function () {
         dataType: 'json',
         autoUpload: true,
         user_dirs:true,
-        url: '/idcard/server/php/index.php?orderid='+$("#orderid").val(),
+        maxNumberOfFiles:2,
+            url: '/idcard/server/php/index.php?orderid='+$("#orderid").val(),
         change: function (e, data) {
             $(".wait").html('等待身份证审核');
         }
@@ -55,7 +56,7 @@ $(function () {
         }).done(function (result) {
                 if($("#auditstatus").val() <= 1){
                     if(result['files'] != ''){
-                        $(".wait").html("等待身份证上传");
+                        $(".wait").html("等待身份证审核");
                     }else{
                         $(".wait").html("等待身份证上传");
                     }

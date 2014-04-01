@@ -67,7 +67,8 @@
 
             // Error and info messages:
             messages: {
-                maxNumberOfFiles: 'Maximum number of files exceeded',
+//                maxNumberOfFiles: 'Maximum number of files exceeded',
+                maxNumberOfFiles: '最多允许上传2张图片',
               //  acceptFileTypes: 'File type not allowed',
                 acceptFileTypes: '文件类型不允许 格式: bmp, png, jpeg, jpg, gif ',
                 maxFileSize: '文件太大',
