@@ -66,6 +66,7 @@ include "Order.php";
                 break;
             case 3:
                 //审核未通过,需要显示上传按钮
+                $cardVerifyText = '身份证图片不正确，请重新上传';
                 $buttonUpload = true;
                 break;
 
@@ -79,6 +80,8 @@ include "Order.php";
         $orderDate =  $orderInfo['OrderDate'];
 
         //收货人相关信息
+        $shipAddressState =  $orderInfo['ShipState'].$orderInfo['ShipCity'].$orderInfo['ShipAddress'];
+
         $shipName = $orderInfo['ShipName'];
         $shipPhone = $orderInfo['ShipPhone'];
         $shipZip = $orderInfo['ShipZip'];
@@ -176,6 +179,7 @@ include "Order.php";
                 <td>
                     <h3><?php echo $shipName?> (女士/先生)</h3>
                     <!--                <p>浙江省 杭州市 余杭区 文一西路969号3号小邮局 (天猫 收) 邮编：311121</p>-->
+                    <p><?php echo $shipAddressState; ?></p>
                     <P><?php echo $shipAddress?>  邮编：<?php echo $shipZip; ?></P>
                 </td>
                 <td>
