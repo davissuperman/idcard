@@ -38,8 +38,9 @@ include "Order.php";
         $auditStatus =  $orderInfo['AuditStatus'];
         $buttonUpload = false;
         $style = "";
-        $auditStatus = 1;
+        $imagesSelected = array();
         $cardVerifyText = '等待身份证上传';
+        $cardVerifyImg = '';
         switch($auditStatus){
             case 0:
                 //未上传，需要显示 上传按钮
@@ -53,7 +54,15 @@ include "Order.php";
             case 2:
                 //审核通过，显示审核通过的指定的图片
                 $style = "style='display:none'";
-                $cardVerifyText = '审核通过';
+                $cardVerifyImg = '<img width=100 height=100 src="/idcard/img/mark.png"/>';
+                $cardVerifyText = $cardVerifyImg;
+                $imagesSelected = $orderInstance->getVerifiedImages();
+                if(empty($imagesSelected)){
+                    $cardVerifyImg = '';
+                    $buttonUpload = true;
+                    $cardVerifyText = '等待身份证审核';
+                }
+//                $orderInstance->display($imagesSelected);
                 break;
             case 3:
                 //审核未通过,需要显示上传按钮
@@ -170,7 +179,7 @@ include "Order.php";
                     <P><?php echo $shipAddress?>  邮编：<?php echo $shipZip; ?></P>
                 </td>
                 <td>
-                    <p class="wait"><?php echo $cardVerifyText; ?></p>
+                    <p class="wait"><?php if($cardVerifyImg){ echo "审核通过";} else{echo $cardVerifyText;} ?></p>
                 </td>
             </tr>
             </tbody>
@@ -248,7 +257,21 @@ include "Order.php";
 </script>
 <!-- The template to display files available for download -->
 <script id="template-download" type="text/x-tmpl">
+    {% var selectArr = new Array();  %}
+<?php  foreach($imagesSelected as $eachImage){ ?>
+{%  selectArr.push("<?php echo$eachImage; ?>"); %}
+<?php } ?>
 {% for (var i=0, file; file=o.files[i]; i++) { %}
+ {%
+    if(selectArr.length>0){
+        if ($.inArray(file.url,selectArr) >= 0) {
+                        // alert(file.deleteUrl);
+        }else{
+            continue;
+        }
+    }
+
+                %}
     <tr class="template-download fade">
         <td>
             <span class="preview">
@@ -258,7 +281,7 @@ include "Order.php";
             </span>
         </td>
         <td>
-            {% if (file.deleteUrl) { %}
+            {% if (file.deleteUrl) {  %}
                 <?php if($buttonUpload){ ?>
                 <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
                     <i class="glyphicon glyphicon-trash"></i>
