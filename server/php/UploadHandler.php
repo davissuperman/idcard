@@ -1321,14 +1321,14 @@ class UploadHandler
     public function saveImages($files){
         foreach($files as $each){
             $url =  $each->url;
-            $this->curlSaveImage($url);
+            $this->imageApi($url);
         }
     }
-    public function curlSaveImage($filePath){
+    public function imageApi($filePath,$flag = 1){
         $data = array();
         $data['ImageUrl'] = $filePath;
         $data['OrderID'] = $this->_orderId;
-        $data['Flag'] = 1;
+        $data['Flag'] = $flag;
         $url='http://10.0.0.24:10009/UploadIDImage.ashx';
 //        $url = $this->_serverPath;
         $o="";
@@ -1347,17 +1347,24 @@ class UploadHandler
     }
     public function delete($print_response = true) {
         $file_names = $this->get_file_names_params();
+
         if (empty($file_names)) {
             $file_names = array($this->get_file_name_param());
         }
+
         $response = array();
+        $options = $this->options;
+
         foreach($file_names as $file_name) {
+            $image = $options['upload_url'].$this->_orderId."/".$file_name;
+            $this->imageApi($image,2);
             $file_path = $this->get_upload_path($file_name);
             $success = is_file($file_path) && $file_name[0] !== '.' && unlink($file_path);
             if ($success) {
                 foreach($this->options['image_versions'] as $version => $options) {
                     if (!empty($version)) {
                         $file = $this->get_upload_path($file_name, $version);
+
                         if (is_file($file)) {
                             unlink($file);
                         }
