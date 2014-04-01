@@ -1329,8 +1329,8 @@ class UploadHandler
         $data['ImageUrl'] = $filePath;
         $data['OrderID'] = $this->_orderId;
         $data['Flag'] = $flag;
-        $url='http://10.0.0.24:10009/UploadIDImage.ashx';
-//        $url = $this->_serverPath;
+//        $url='http://10.0.0.24:10009/UploadIDImage.ashx';
+        $url = $this->_serverPath;
         $o="";
         foreach ($data as $k=>$v)
         {
