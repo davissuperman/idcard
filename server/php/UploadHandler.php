@@ -40,11 +40,17 @@ class UploadHandler
 
     protected $image_objects = array();
     protected $_orderId = null;
+    protected $_serverPath = '';
     function __construct($options = null, $initialize = true, $error_messages = null) {
         if(isset($_REQUEST['orderid'])){
             $this->_orderId = $_REQUEST['orderid'];
         }
+        if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_ADDR'] == '127.0.0.1') {
+            $this->_serverPath = "http://10.0.0.24:10009/UploadIDImage.ashx";
 
+        }else{
+            $this->_serverPath = "http://116.247.69.238:10009/UploadIDImage.ashx";
+        }
         $this->options = array(
             'script_url' => $this->get_full_url().'/',
             'upload_dir' => dirname($this->get_server_var('SCRIPT_FILENAME')).'/files/',
@@ -1323,8 +1329,8 @@ class UploadHandler
         $data['ImageUrl'] = $filePath;
         $data['OrderID'] = $this->_orderId;
         $data['Flag'] = 1;
-        //$url='http://180.166.202.70/kaixinwabao/index.php/api/user/login';
         $url='http://10.0.0.24:10009/UploadIDImage.ashx';
+//        $url = $this->_serverPath;
         $o="";
         foreach ($data as $k=>$v)
         {
