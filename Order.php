@@ -3,6 +3,7 @@ class Order{
     public $orderid;
     public $auth = false;
     public $errorMessage;
+    public $_serverPath;
     public function __construct(){
         $requestUri = trim( $_SERVER['REQUEST_URI'],'/');
         $arr = explode("/",$requestUri);
@@ -25,6 +26,11 @@ class Order{
 
         $this->orderid = $arr[2];
         $this->auth = true;
+        if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_ADDR'] == '127.0.0.1') {
+            $this->_serverPath = "http://10.0.0.24:10009/";
+        }else{
+            $this->_serverPath = "http://116.247.69.238:10009/";
+        }
 //        echo trim( $_SERVER['REQUEST_URI'],'/');
 //        $this->display($_SERVER);
     }
@@ -34,11 +40,7 @@ class Order{
             $this->errorMessage = "订单号错误，不能为空";
             $this->auth = false;
         }
-        if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_ADDR'] == '127.0.0.1') {
-            $url = "http://10.0.0.24:10009/Order.ashx?OrderID=$orderId";
-        }else{
-            $url = "http://116.247.69.238:10009/Order.ashx?OrderID=$orderId";
-        }
+        $url =  $this->_serverPath."Order.ashx?OrderID=$orderId";
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL,$url);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0); // 对认证证书来源的检查，0表示阻止对证书的合法性的检查。
@@ -54,5 +56,8 @@ class Order{
         echo "<pre>";
         var_dump($var);
         echo "</pre>";
+    }
+    public function getVerifiedImages(){
+
     }
 }
