@@ -72,6 +72,9 @@ class Order{
 
         if(isset($result['Order']['Images'])){
             $result = $result['Order']['Images'];
+            if(isset($result['ImageURL']) && $result['ImageURL']){
+                $result = array($result);
+            }
             foreach($result as $each){
                 if($each['IsDefaultImage'] == 'true'){
                     $images[] = $each['ImageURL'];
