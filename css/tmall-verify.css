@@ -279,3 +279,8 @@ body{
 #main-nav ul li#main-nav-home, #main-nav ul li#main-nav-about, #main-nav ul li#main-nav-new{	
 	display:none;
 }
+.cardverify{
+    color: #F3AC00;
+    font-weight: bold;
+    font-size: 24px;
+}

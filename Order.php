@@ -14,14 +14,17 @@ class Order{
             $this->orderid = $arr[2];
             $this->token = $arr[4];
             $str = $this->orderid."sneakerhead";
+            /*
             if(md5($str) ==  $this->token){
                 $this->auth = true;
             }else{
                 $this->errorMessage = "订单号无此权限";
             }
+            */
         }
 
-        //$this->auth = true;
+        $this->orderid = $arr[2];
+        $this->auth = true;
 //        echo trim( $_SERVER['REQUEST_URI'],'/');
 //        $this->display($_SERVER);
     }

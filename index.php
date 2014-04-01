@@ -33,7 +33,31 @@ include "Order.php";
     if($orderInstance->auth){
         $orderInfo = $orderInstance->getOrderInfo();
         $orderId = $orderInfo['orderid'];
+
         $orderInfo = $orderInfo['Order'];
+        $auditStatus =  $orderInfo['AuditStatus'];
+        $buttonUpload = false;
+        $style = "";
+        $auditStatus = 1;
+        switch($auditStatus){
+            case 0:
+                //未上传，需要显示 上传按钮
+                $buttonUpload = true;
+                break;
+            case 1:
+                //等待审核,不显示上传按钮,只显示图片
+                $style = "style='display:none'";
+                break;
+            case 2:
+                //审核通过，显示审核通过的指定的图片
+                $style = "style='display:none'";
+                break;
+            case 3:
+                //审核未通过,需要显示上传按钮
+                $buttonUpload = true;
+                break;
+
+        }
         $orderDate = $orderInfo['OrderDate'];
         $wangwangName = $orderInfo['Name'];
         // $address = $orderInfo['Country'] ." ". $orderInfo['City']." ". $orderInfo['Address'];
@@ -89,11 +113,12 @@ include "Order.php";
         <div id="upload">
     <form id="fileupload" action="" method="POST" enctype="multipart/form-data">
         <div class="row fileupload-buttonbar">
-            <div>
+
+            <div <?php echo $style;  ?>>
                 <!-- The fileinput-button span is used to style the file input field as button -->
                 <span class="btn btn-success fileinput-button">
                     <i class="glyphicon glyphicon-plus"></i>
-                    <span>上传身份证</span>
+                      <span>上传身份证</span>
                     <input type="file" name="files[]" multiple>
                     <input type="hidden" name="orderid" value="<?php echo $orderId; ?>" id="orderid">
                 </span>
@@ -103,6 +128,7 @@ include "Order.php";
                 <!-- The global file processing state -->
                 <span class="fileupload-process"></span>
             </div>
+
             <!-- The global progress state -->
             <div class="col-lg-5 fileupload-progress fade">
                 <!-- The global progress bar -->
@@ -229,10 +255,12 @@ include "Order.php";
         </td>
         <td>
             {% if (file.deleteUrl) { %}
+                <?php if($buttonUpload){ ?>
                 <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
                     <i class="glyphicon glyphicon-trash"></i>
                     <span>删除</span>
                 </button>
+                <?php }else{ echo ' <span class="cardverify">等待身份证审核</span>';}?>
             {% } else { %}
                 <button class="btn btn-warning cancel">
                     <i class="glyphicon glyphicon-ban-circle"></i>
