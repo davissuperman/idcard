@@ -1,4 +1,4 @@
-/*
+﻿/*
  * jQuery File Upload Plugin JS Example 8.9.1
  * https://github.com/blueimp/jQuery-File-Upload
  *
@@ -19,7 +19,7 @@ $(function () {
         // Uncomment the following to send cross-domain cookies:
         //xhrFields: {withCredentials: true},
         acceptFileTypes: /(\.|\/)(gif|jpe?g|png|bmp)$/i,
-        maxFileSize: 2000000, // 2MB
+        maxFileSize: 5000000, // 2MB
         previewMaxWidth: 100,
         previewMaxHeight: 100,
         dataType: 'json',
