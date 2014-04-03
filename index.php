@@ -6,7 +6,7 @@ include "Order.php";
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>-->
-    <title>Sneakerhead 身份证上传</title>
+    <title>Sneakerhead 身份证上传1</title>
     <link href="/idcard/css/tmall-verify.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
 
